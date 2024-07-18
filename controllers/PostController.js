@@ -20,16 +20,45 @@ export const getOne = async (req, res) => {
 
 
       const post = await PostModel.findByIdAndUpdate(
-         { _id: postId },
+         postId,
          { $inc: { viewsCount: 1 } },
          { returnDocument: 'after' }
-      ).populate('ser')
+      ).populate('user')
+
+      if (!post) {
+         return res.status(404).json({
+            message: 'Статья не найдена'
+         })
+      }
 
       res.json(post)
 
    } catch (err) {
       res.status(500).json({
          message: 'Не удалось получить статью'
+      })
+   }
+}
+
+export const remove = async (req, res) => {
+   try {
+      const postId = req.params.id
+
+      const post = await PostModel.findByIdAndDelete(postId)
+
+      if (!post) {
+         return res.status(404).json({
+            message: 'Статья не найдена'
+         })
+      }
+
+      res.json({
+         success: true
+      })
+
+   } catch (err) {
+      res.status(500).json({
+         message: 'Не удалось удалить статью'
       })
    }
 }
