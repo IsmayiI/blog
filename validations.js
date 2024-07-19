@@ -19,3 +19,10 @@ export const postCreateValidation = [
    body('tags', 'Неверный формат тэгов').optional().isArray(),
    body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
 ];
+
+export const postUpdateValidation = [
+   body('title', 'Введите заголовок статьи').optional().isLength({ min: 3 }).isString(),
+   body('text', 'Введите текст статьи').optional().isLength({ min: 3 }).isString(),
+   body('tags', 'Неверный формат тэгов').optional().isArray(),
+   body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
+];
