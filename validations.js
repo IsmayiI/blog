@@ -26,3 +26,8 @@ export const postUpdateValidation = [
    body('tags', 'Неверный формат тэгов').optional().isArray(),
    body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
 ];
+
+export const commentCreateValidation = [
+   body('text', 'Введите текст комментария').isLength({ min: 1 }).isString(),
+   body('postId', 'id не передан').isString(),
+];

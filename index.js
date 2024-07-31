@@ -7,8 +7,8 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import { registerValidation, loginValidation, postCreateValidation, postUpdateValidation } from './validations.js'
-import { PostController, UserController } from "./controllers/index.js"
+import { registerValidation, loginValidation, postCreateValidation, postUpdateValidation, commentCreateValidation } from './validations.js'
+import { CommentController, PostController, UserController } from "./controllers/index.js"
 import { checkAuth, handleValidationErrors } from "./utils/index.js"
 
 mongoose.connect('mongodb+srv://admin:12345@cluster0.dzsrkfs.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
@@ -57,6 +57,13 @@ app.get('/posts/:id', PostController.getOne)
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create)
 app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, postUpdateValidation, handleValidationErrors, PostController.update)
+
+
+app.get('/comments', CommentController.getLastComments)
+app.get('/comments/:id', CommentController.getPostComments)
+app.post('/comments', checkAuth, commentCreateValidation, handleValidationErrors, CommentController.create)
+
+
 
 
 app.listen(4444, (err) => {
