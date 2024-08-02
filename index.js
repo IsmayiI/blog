@@ -11,7 +11,7 @@ import { registerValidation, loginValidation, postCreateValidation, postUpdateVa
 import { CommentController, PostController, UserController } from "./controllers/index.js"
 import { checkAuth, handleValidationErrors } from "./utils/index.js"
 
-mongoose.connect('mongodb+srv://admin:12345@cluster0.dzsrkfs.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URL)
    .then(() => console.log('db ok'))
    .catch((err) => console.log('db error', err))
 
@@ -66,7 +66,7 @@ app.post('/comments', checkAuth, commentCreateValidation, handleValidationErrors
 
 
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
    if (err) {
       console.log(err);
    }
