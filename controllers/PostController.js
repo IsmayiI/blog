@@ -124,3 +124,29 @@ export const update = async (req, res) => {
       })
    }
 }
+
+
+export const updateCommentsCount = async (req, res, next) => {
+   try {
+      const postId = req.body.postId
+
+
+      const post = await PostModel.findByIdAndUpdate(
+         postId,
+         { $inc: { commentsCount: 1 } },
+         { returnDocument: 'after' }
+      )
+
+      if (!post) {
+         return res.status(404).json({
+            message: 'Статья не найдена'
+         })
+      }
+
+      next()
+   } catch (err) {
+      res.status(500).json({
+         message: 'Не удалось обновить счетчик комментариев'
+      })
+   }
+}

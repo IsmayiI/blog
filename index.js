@@ -61,7 +61,7 @@ app.patch('/posts/:id', checkAuth, postUpdateValidation, handleValidationErrors,
 
 app.get('/comments', CommentController.getLastComments)
 app.get('/comments/:id', CommentController.getPostComments)
-app.post('/comments', checkAuth, commentCreateValidation, handleValidationErrors, CommentController.create)
+app.post('/comments', checkAuth, commentCreateValidation, handleValidationErrors, PostController.updateCommentsCount, CommentController.create)
 
 
 
